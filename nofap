@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeforeYouFap.com - Redirect Your Urges</title>
+    <style>
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --dark: #292F36;
+            --light: #F7FFF7;
+            --accent: #FFE66D;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        .tagline {
+            font-style: italic;
+            margin-top: 10px;
+        }
+        
+        .counter {
+            background-color: var(--dark);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        
+        .main-btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .main-btn:hover {
+            background-color: #3aa89b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .task-container {
+            display: none;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .task-title {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .task-description {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            min-height: 80px;
+        }
+        
+        .timer {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--secondary);
+            margin: 20px 0;
+        }
+        
+        .task-btn {
+            background-color: var(--accent);
+            color: var(--dark);
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 10px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .task-btn:hover {
+            background-color: #f5d747;
+        }
+        
+        .completed-container {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .completed-title {
+            color: var(--secondary);
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .completed-message {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .progress-container {
+            margin-top: 30px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .progress-title {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--secondary);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>BeforeYouFap.com</h1>
+            <p class="tagline">The 5-minute urge killer</p>
+            <div class="counter">1,284,917 urges redirected this month</div>
+        </header>
+        
+        <button id="startBtn" class="main-btn">I Need to Redirect My Urge!</button>
+        
+        <div id="taskContainer" class="task-container">
+            <h2 class="task-title">Challenge #<span id="taskNumber">1</span></h2>
+            <div class="task-description" id="taskDescription"></div>
+            <div class="timer" id="timer">00:30</div>
+            <div>
+                <button id="doneBtn" class="task-btn">I Did It!</button>
+                <button id="skipBtn" class="task-btn">Skip Task</button>
+            </div>
+        </div>
+        
+        <div id="completedContainer" class="completed-container">
+            <h2 class="completed-title">URGE DEFEATED! 🎉</h2>
+            <p class="completed-message">You redirected your energy like a champion!</p>
+            <button id="nextBtn" class="main-btn">Keep Going (3 more tasks)</button>
+            <div class="progress-container">
+                <h3 class="progress-title">Your Progress</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">3/7 tasks completed today</div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>BeforeYouFap.com - Helping you redirect your energy since 2023</p>
+            <p><a href="#" style="color: var(--primary);">Why This Works</a> | <a href="#" style="color: var(--primary);">About</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // Task database - 50+ tasks across categories
+        const tasks = [
+            // Physical activities
+            "Do 10 push-ups right now!",
+            "Stand up and do 15 jumping jacks.",
+            "Hold a plank for 30 seconds.",
+            "Do 5 burpees as fast as you can.",
+            "Stretch your arms overhead for 20 seconds.",
+            "Walk around your room for 1 minute.",
+            "Do 10 squats with perfect form.",
+            "Balance on one leg for 30 seconds (each side).",
+            "Do 5 lunges on each leg.",
+            "Try to touch your toes and hold for 15 seconds.",
+            
+            // Mental challenges
+            "Name 5 countries that start with the letter 'B'.",
+            "Count backwards from 100 by 7s.",
+            "Recite the alphabet backwards.",
+            "Name all 50 US states (or your country's provinces).",
+            "Solve this: If 3x + 5 = 20, what is x?",
+            "List 10 things you can see right now.",
+            "Name 4 sounds you can hear right now.",
+            "Recall what you ate for breakfast yesterday.",
+            "Memorize a phone number for 30 seconds.",
+            "Think of 3 things you're grateful for today.",
+            
+            // Creative tasks
+            "Doodle a silly animal in 30 seconds.",
+            "Write a haiku about your current mood.",
+            "Invent a new word and its definition.",
+            "Sketch the room you're in with your non-dominant hand.",
+            "Compose a 2-line poem about socks.",
+            "Design a logo for an imaginary company.",
+            "Write down the title of your autobiography.",
+            "Create a superhero name based on your personality.",
+            "Imagine a new ice cream flavor and describe it.",
+            "Draw a cartoon version of yourself in 1 minute.",
+            
+            // Fun distractions
+            "Google 'baby capybara videos' and watch for 1 minute.",
+            "Find and read a random Wikipedia article.",
+            "Look up the weather in Tokyo right now.",
+            "Search for the world's weirdest animal and learn about it.",
+            "Find a joke online and memorize it to tell someone later.",
+            "Watch a 1-minute tutorial on something random (e.g., juggling).",
+            "Look up the lyrics to your favorite childhood song.",
+            "Find a picture of the cutest animal you can think of.",
+            "Search for 'most satisfying video' and watch one.",
+            "Look up a random historical event that happened today.",
+            
+            // Mindfulness
+            "Close your eyes and take 5 deep breaths.",
+            "List 3 things you're looking forward to this week.",
+            "Write down one nice thing you could do for someone today.",
+            "Notice 5 different colors in your surroundings.",
+            "Name one thing you're proud of accomplishing recently.",
+            "Stand up straight and roll your shoulders 5 times.",
+            "Drink a glass of water mindfully, noticing the temperature.",
+            "Think of someone you appreciate and why.",
+            "Notice how your body feels right now without judgment.",
+            "Write down one small goal for tomorrow.",
+            
+            // Bonus weird tasks
+            "Sing your favorite song in a silly voice.",
+            "Dance like nobody's watching for 30 seconds.",
+            "Pretend you're a news anchor reporting on your day.",
+            "Try to lick your elbow (seriously, try it).",
+            "Make your best impression of a celebrity.",
+            "Say the alphabet with a French accent.",
+            "Try to write your name with your non-dominant hand.",
+            "Balance a book on your head for 30 seconds.",
+            "Recite a nursery rhyme in a dramatic voice.",
+            "Try to touch your tongue to your nose."
+        ];
+
+        // DOM elements
+        const startBtn = document.getElementById('startBtn');
+        const taskContainer = document.getElementById('taskContainer');
+        const completedContainer = document.getElementById('completedContainer');
+        const taskDescription = document.getElementById('taskDescription');
+        const taskNumber = document.getElementById('taskNumber');
+        const timer = document.getElementById('timer');
+        const doneBtn = document.getElementById('doneBtn');
+        const skipBtn = document.getElementById('skipBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        
+        // State variables
+        let currentTask = 0;
+        let tasksCompleted = 0;
+        let timerInterval;
+        let timeLeft = 30;
+        
+        // Initialize
+        function init() {
+            startBtn.addEventListener('click', startChallenge);
+            doneBtn.addEventListener('click', completeTask);
+            skipBtn.addEventListener('click', skipTask);
+            nextBtn.addEventListener('click', nextTask);
+        }
+        
+        // Start the challenge
+        function startChallenge() {
+            startBtn.style.display = 'none';
+            taskContainer.style.display = 'block';
+            getRandomTask();
+            startTimer();
+        }
+        
+        // Get a random task
+        function getRandomTask() {
+            currentTask++;
+            taskNumber.textContent = currentTask;
+            const randomIndex = Math.floor(Math.random() * tasks.length);
+            taskDescription.textContent = tasks[randomIndex];
+            timeLeft = 30;
+            updateTimerDisplay();
+        }
+        
+        // Start the timer
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    skipTask();
+                }
+            }, 1000);
+        }
+        
+        // Update timer display
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        // Complete task
+        function completeTask() {
+            clearInterval(timerInterval);
+            tasksCompleted++;
+            showCompletion();
+        }
+        
+        // Skip task
+        function skipTask() {
+            clearInterval(timerInterval);
+            showCompletion();
+        }
+        
+        // Show completion screen
+        function showCompletion() {
+            taskContainer.style.display = 'none';
+            completedContainer.style.display = 'block';
+            
+            // Update progress
+            const progressPercentage = Math.min((tasksCompleted / 7) * 100, 100);
+            progressFill.style.width = `${progressPercentage}%`;
+            progressText.textContent = `${tasksCompleted}/7 tasks completed today`;
+            
+            // Update next button text
+            if (currentTask >= 3) {
+                nextBtn.textContent = "I'm Done For Now";
+            } else {
+                nextBtn.textContent = `Keep Going (${4 - currentTask} more tasks)`;
+            }
+        }
+        
+        // Next task
+        function nextTask() {
+            if (currentTask >= 3) {
+                // Reset for demo purposes
+                currentTask = 0;
+                tasksCompleted = 0;
+                completedContainer.style.display = 'none';
+                startBtn.style.display = 'block';
+            } else {
+                completedContainer.style.display = 'none';
+                taskContainer.style.display = 'block';
+                getRandomTask();
+                startTimer();
+            }
+        }
+        
+        // Initialize the app
+        init();
+    </script>
+</body>
+</html>
